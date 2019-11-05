@@ -1,19 +1,27 @@
 <template>
   <div id="app">
-    <ul>
-      <li v-for="question in questions" v-bind:key="question.question">{{ question }}</li>
-    </ul>
-    <WouldYouRatherQuestion></WouldYouRatherQuestion>
+    
+    <ComponentQuestion 
+    
+        v-bind:answer1="answer1"
+        v-bind:answer2="answer2"
+        v-on:answer-changed="answerChanged">
+    </ComponentQuestion>
+    <div>
+        {{ userSelectionMessage }}
+     </div>
   </div>
 </template>
 
 <script>
-import WouldYouRatherQuestion from './components/WouldYouRatherQuestion.vue'
-
+import ComponentQuestion from './components/ComponentQuestion.vue'
 export default {
   name: 'app',
   data:function(){
     return{
+      answer1: '',
+      answer2: '',
+      userSelectionMessage: '',
       questions:[
 
         {
@@ -33,12 +41,18 @@ export default {
         question: 'have an elephant-sized cat or a cat-sized elephant',
         answer1: 'Have an elephant cat-sized',
         ansewr2: 'Have a cat-sized elephant'
-        }
+        },
       ]
     }
   },
   components: {
-    WouldYouRatherQuestion
+    ComponentQuestion,
+  },
+ 
+  methods:{
+     answerChanged(answer){
+        this.userSelectionMessage =`Thanks! You selected ${answer}`
+    },
   }
 }
 </script>
@@ -50,6 +64,12 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  margin-top: 30px;
+  padding:30px;
+}
+li{
+  
+  border:1px thin gray;
+  background: #2c3e50;
 }
 </style>
