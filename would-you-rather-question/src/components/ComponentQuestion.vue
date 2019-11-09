@@ -1,42 +1,51 @@
 <template>
-    <div>
-        <h2>Would You Rather Questions</h2>
-        <div>
-            <ul> 
-                <li v-for="quest in questions" :key="quest.question">{{ quest.question }} </li>
-            </ul>
-
-            <input type="radio" v-model="choice" v-bind:value="answer1" v-on:change="$emit('answer-changed', choice)">
-            <label>{{ answer1 }}</label>
-
-            <input  type="radio" v-model="choice" v-bind:value="answer2" v-on:change="$emit('answer-changed', choice)">
-            <label>{{ answer2 }}</label>
-
-            </div>
-
+	<div class="would-you-rather">
+		<h3>Would you rather...</h3>
+		<h4><span :v-model="id">{{id+1}}.</span>  {{ question }}</h4>
+    	<div class="radio">
+			<label>
+      			<input type="radio" :value="answer1" v-model="selection">
+      				{{answer1}}
+    		</label>
+		</div>
+    	<div class="radio">
+			<label>
+      			<input type="radio" :value="answer2" v-model="selection">
+      				{{answer2}}
+    		</label>
+  		</div>
     </div>
 </template>
 
 <script>
 export default {
-    name:'ComponentQuestion',
-    data:function(){
-        return{
-            choice:'',
-            answer1:'',
-            answer2:''
-        }
-    },
-    props:{
-        questions: Array,
-    },
-    methods: {
-        
-       }
-    
+	name: 'ComponentQuestion',
+	props: {
+		id:0,
+		question: String,
+		answer1: String,
+		answer2: String,
+		
+	},
+	data() {
+		return {
+			selection: '',
+			
+		}
+	},
+	watch: {
+		
+		selection() {
+			this.$emit('selection-changed', this.selection, this.id)
+		}
+	},
 }
 </script>
 
 <style>
-
+.would-you-rather{
+    display: block;
+	padding-left: 10px;
+   background-image: linear-gradient(green, yellow);
+}
 </style>

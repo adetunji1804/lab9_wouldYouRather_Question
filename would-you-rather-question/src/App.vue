@@ -1,15 +1,21 @@
 <template>
   <div id="app">
-    
-    <ComponentQuestion 
-    
-        v-bind:answer1="answer1"
-        v-bind:answer2="answer2"
-        v-on:answer-changed="answerChanged">
-    </ComponentQuestion>
-    <div>
-        {{ userSelectionMessage }}
-     </div>
+    <ComponentQuestion v-for="q in questions" v-bind:key="q.id"
+      v-bind:question="q.question"
+      
+      v-bind:answer2="q.answer2"
+      v-bind:answer1="q.answer1"
+      v:bind:id="q.id"
+      v-bind:id="q.id"
+      v-bind:selection-changed="selectionChanged"
+      >   
+      </ComponentQuestion>
+       <h4>You would rather...</h4>
+       
+  <ol>
+    <li v-for="choice in choices" :key="choice">{{ choice }} </li>
+
+  </ol>
   </div>
 </template>
 
@@ -19,42 +25,43 @@ export default {
   name: 'app',
   data:function(){
     return{
-      answer1: '',
-      answer2: '',
-      userSelectionMessage: '',
       questions:[
 
         {
         id:0,
         question: 'live in a triangle shaped house or a circle shaped house',
         answer1: 'Live in a triangle house',
-        ansewr2: 'Live in a circle house'
+        answer2: 'Live in a circle house'
         },
         {
         id:1,
         question: 'be a wizard or a superhero?',
         answer1: 'Be a wizard',
-        ansewr2: 'Be a super hero'
+        answer2: 'Be a super hero'
         },
         {
         id:2,
         question: 'have an elephant-sized cat or a cat-sized elephant',
         answer1: 'Have an elephant cat-sized',
-        ansewr2: 'Have a cat-sized elephant'
-        },
-      ]
-    }
+        answer2: 'Have a cat-sized elephant'
+        }
+      ],
+      
+      choices: []
+  
+  }
   },
-  components: {
-    ComponentQuestion,
-  },
- 
+    components: {
+     ComponentQuestion 
+  } ,
   methods:{
-     answerChanged(answer){
-        this.userSelectionMessage =`Thanks! You selected ${answer}`
-    },
+    selectionChanged(choice, id)
+    {
+        this.choices.push(choice, id)
+    }
   }
 }
+
 </script>
 
 <style>
@@ -62,14 +69,10 @@ export default {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
+  text-align: left;
   color: #2c3e50;
   margin-top: 30px;
   padding:30px;
 }
-li{
-  
-  border:1px thin gray;
-  background: #2c3e50;
-}
+
 </style>
